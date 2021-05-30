@@ -36,9 +36,9 @@ namespace FinalProject
             this.option_btn = new System.Windows.Forms.Button();
             this.exit_btn = new System.Windows.Forms.Button();
             this.countdown_timer = new System.Windows.Forms.Timer(this.components);
-            this.coundown_img = new System.Windows.Forms.ImageList(this.components);
-            this.countdown_pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.countdown_pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.countdown_img = new System.Windows.Forms.ImageList(this.components);
+            this.result_pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.result_pictureBox2 = new System.Windows.Forms.PictureBox();
             this.game_timer = new System.Windows.Forms.Timer(this.components);
             this.p1_timer = new System.Windows.Forms.Timer(this.components);
             this.p2_timer = new System.Windows.Forms.Timer(this.components);
@@ -50,12 +50,26 @@ namespace FinalProject
             this.combo_pictureBox2 = new System.Windows.Forms.PictureBox();
             this.p1_combo_timer = new System.Windows.Forms.Timer(this.components);
             this.p1_linepop_timer = new System.Windows.Forms.Timer(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.countdown_pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.countdown_pictureBox2)).BeginInit();
+            this.KO_pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.KO_pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.KO_img = new System.Windows.Forms.ImageList(this.components);
+            this.p1_KOtimer = new System.Windows.Forms.Timer(this.components);
+            this.p2_KOtimer = new System.Windows.Forms.Timer(this.components);
+            this.result_img = new System.Windows.Forms.ImageList(this.components);
+            this.countdown_pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.countdown_pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.timesup_timer = new System.Windows.Forms.Timer(this.components);
+            this.ok_btn = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.result_pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.result_pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.linepop_picturebox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.linepop_picturebox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.combo_pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.combo_pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.KO_pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.KO_pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.countdown_pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.countdown_pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // start_btn
@@ -104,37 +118,37 @@ namespace FinalProject
             this.countdown_timer.Interval = 1000;
             this.countdown_timer.Tick += new System.EventHandler(this.countdown_timer_Tick);
             // 
-            // coundown_img
+            // countdown_img
             // 
-            this.coundown_img.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("coundown_img.ImageStream")));
-            this.coundown_img.TransparentColor = System.Drawing.Color.Transparent;
-            this.coundown_img.Images.SetKeyName(0, "countdown3.jpg");
-            this.coundown_img.Images.SetKeyName(1, "countdown2.jpg");
-            this.coundown_img.Images.SetKeyName(2, "countdown1.jpg");
-            this.coundown_img.Images.SetKeyName(3, "countdown0.jpg");
-            this.coundown_img.Images.SetKeyName(4, "times_up.jpg");
+            this.countdown_img.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("countdown_img.ImageStream")));
+            this.countdown_img.TransparentColor = System.Drawing.Color.Transparent;
+            this.countdown_img.Images.SetKeyName(0, "countdown3.jpg");
+            this.countdown_img.Images.SetKeyName(1, "countdown2.jpg");
+            this.countdown_img.Images.SetKeyName(2, "countdown1.jpg");
+            this.countdown_img.Images.SetKeyName(3, "countdown0.jpg");
+            this.countdown_img.Images.SetKeyName(4, "ko.jpg");
             // 
-            // countdown_pictureBox1
+            // result_pictureBox1
             // 
-            this.countdown_pictureBox1.BackColor = System.Drawing.Color.Black;
-            this.countdown_pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.countdown_pictureBox1.Location = new System.Drawing.Point(200, 200);
-            this.countdown_pictureBox1.Margin = new System.Windows.Forms.Padding(0);
-            this.countdown_pictureBox1.Name = "countdown_pictureBox1";
-            this.countdown_pictureBox1.Size = new System.Drawing.Size(100, 100);
-            this.countdown_pictureBox1.TabIndex = 4;
-            this.countdown_pictureBox1.TabStop = false;
+            this.result_pictureBox1.BackColor = System.Drawing.Color.Black;
+            this.result_pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.result_pictureBox1.Location = new System.Drawing.Point(150, 200);
+            this.result_pictureBox1.Margin = new System.Windows.Forms.Padding(0);
+            this.result_pictureBox1.Name = "result_pictureBox1";
+            this.result_pictureBox1.Size = new System.Drawing.Size(200, 100);
+            this.result_pictureBox1.TabIndex = 4;
+            this.result_pictureBox1.TabStop = false;
             // 
-            // countdown_pictureBox2
+            // result_pictureBox2
             // 
-            this.countdown_pictureBox2.BackColor = System.Drawing.Color.Black;
-            this.countdown_pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.countdown_pictureBox2.Location = new System.Drawing.Point(900, 200);
-            this.countdown_pictureBox2.Margin = new System.Windows.Forms.Padding(0);
-            this.countdown_pictureBox2.Name = "countdown_pictureBox2";
-            this.countdown_pictureBox2.Size = new System.Drawing.Size(100, 100);
-            this.countdown_pictureBox2.TabIndex = 5;
-            this.countdown_pictureBox2.TabStop = false;
+            this.result_pictureBox2.BackColor = System.Drawing.Color.Black;
+            this.result_pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.result_pictureBox2.Location = new System.Drawing.Point(850, 200);
+            this.result_pictureBox2.Margin = new System.Windows.Forms.Padding(0);
+            this.result_pictureBox2.Name = "result_pictureBox2";
+            this.result_pictureBox2.Size = new System.Drawing.Size(200, 100);
+            this.result_pictureBox2.TabIndex = 5;
+            this.result_pictureBox2.TabStop = false;
             // 
             // game_timer
             // 
@@ -227,17 +241,104 @@ namespace FinalProject
             this.p1_linepop_timer.Interval = 1500;
             this.p1_linepop_timer.Tick += new System.EventHandler(this.p1_linepop_timer_Tick);
             // 
+            // KO_pictureBox1
+            // 
+            this.KO_pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.KO_pictureBox1.Location = new System.Drawing.Point(50, 290);
+            this.KO_pictureBox1.Name = "KO_pictureBox1";
+            this.KO_pictureBox1.Size = new System.Drawing.Size(75, 75);
+            this.KO_pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.KO_pictureBox1.TabIndex = 10;
+            this.KO_pictureBox1.TabStop = false;
+            // 
+            // KO_pictureBox2
+            // 
+            this.KO_pictureBox2.BackColor = System.Drawing.Color.Transparent;
+            this.KO_pictureBox2.Location = new System.Drawing.Point(750, 290);
+            this.KO_pictureBox2.Name = "KO_pictureBox2";
+            this.KO_pictureBox2.Size = new System.Drawing.Size(75, 75);
+            this.KO_pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.KO_pictureBox2.TabIndex = 11;
+            this.KO_pictureBox2.TabStop = false;
+            // 
+            // KO_img
+            // 
+            this.KO_img.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("KO_img.ImageStream")));
+            this.KO_img.TransparentColor = System.Drawing.Color.Transparent;
+            this.KO_img.Images.SetKeyName(0, "ko1.png");
+            this.KO_img.Images.SetKeyName(1, "ko2.png");
+            this.KO_img.Images.SetKeyName(2, "ko3.png");
+            this.KO_img.Images.SetKeyName(3, "ko4.png");
+            this.KO_img.Images.SetKeyName(4, "ko5.png");
+            // 
+            // p1_KOtimer
+            // 
+            this.p1_KOtimer.Interval = 1000;
+            this.p1_KOtimer.Tick += new System.EventHandler(this.p1_KOtimer_Tick);
+            // 
+            // p2_KOtimer
+            // 
+            this.p2_KOtimer.Interval = 1000;
+            // 
+            // result_img
+            // 
+            this.result_img.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("result_img.ImageStream")));
+            this.result_img.TransparentColor = System.Drawing.Color.Transparent;
+            this.result_img.Images.SetKeyName(0, "times_up.jpg");
+            this.result_img.Images.SetKeyName(1, "win.jpg");
+            this.result_img.Images.SetKeyName(2, "lose.jpg");
+            this.result_img.Images.SetKeyName(3, "even.jpg");
+            // 
+            // countdown_pictureBox1
+            // 
+            this.countdown_pictureBox1.BackColor = System.Drawing.Color.Black;
+            this.countdown_pictureBox1.Location = new System.Drawing.Point(200, 200);
+            this.countdown_pictureBox1.Name = "countdown_pictureBox1";
+            this.countdown_pictureBox1.Size = new System.Drawing.Size(100, 100);
+            this.countdown_pictureBox1.TabIndex = 12;
+            this.countdown_pictureBox1.TabStop = false;
+            // 
+            // countdown_pictureBox2
+            // 
+            this.countdown_pictureBox2.BackColor = System.Drawing.Color.Black;
+            this.countdown_pictureBox2.Location = new System.Drawing.Point(900, 200);
+            this.countdown_pictureBox2.Name = "countdown_pictureBox2";
+            this.countdown_pictureBox2.Size = new System.Drawing.Size(100, 100);
+            this.countdown_pictureBox2.TabIndex = 13;
+            this.countdown_pictureBox2.TabStop = false;
+            // 
+            // timesup_timer
+            // 
+            this.timesup_timer.Interval = 2000;
+            this.timesup_timer.Tick += new System.EventHandler(this.timesup_timer_Tick);
+            // 
+            // ok_btn
+            // 
+            this.ok_btn.Font = new System.Drawing.Font("Comic Sans MS", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ok_btn.Location = new System.Drawing.Point(540, 300);
+            this.ok_btn.Name = "ok_btn";
+            this.ok_btn.Size = new System.Drawing.Size(120, 50);
+            this.ok_btn.TabIndex = 14;
+            this.ok_btn.Text = "OK";
+            this.ok_btn.UseVisualStyleBackColor = true;
+            this.ok_btn.Click += new System.EventHandler(this.ok_btn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 26F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1199, 661);
+            this.Controls.Add(this.ok_btn);
+            this.Controls.Add(this.countdown_pictureBox2);
+            this.Controls.Add(this.countdown_pictureBox1);
+            this.Controls.Add(this.KO_pictureBox2);
+            this.Controls.Add(this.KO_pictureBox1);
             this.Controls.Add(this.combo_pictureBox2);
             this.Controls.Add(this.combo_pictureBox1);
             this.Controls.Add(this.linepop_picturebox1);
             this.Controls.Add(this.linepop_picturebox2);
-            this.Controls.Add(this.countdown_pictureBox2);
-            this.Controls.Add(this.countdown_pictureBox1);
+            this.Controls.Add(this.result_pictureBox2);
+            this.Controls.Add(this.result_pictureBox1);
             this.Controls.Add(this.exit_btn);
             this.Controls.Add(this.option_btn);
             this.Controls.Add(this.rule_btn);
@@ -251,12 +352,16 @@ namespace FinalProject
             this.Text = "Tetris 2P";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);
-            ((System.ComponentModel.ISupportInitialize)(this.countdown_pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.countdown_pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.result_pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.result_pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.linepop_picturebox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.linepop_picturebox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.combo_pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.combo_pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.KO_pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.KO_pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.countdown_pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.countdown_pictureBox2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -268,9 +373,9 @@ namespace FinalProject
         private System.Windows.Forms.Button option_btn;
         private System.Windows.Forms.Button exit_btn;
         private System.Windows.Forms.Timer countdown_timer;
-        private System.Windows.Forms.ImageList coundown_img;
-        private System.Windows.Forms.PictureBox countdown_pictureBox1;
-        private System.Windows.Forms.PictureBox countdown_pictureBox2;
+        private System.Windows.Forms.ImageList countdown_img;
+        private System.Windows.Forms.PictureBox result_pictureBox1;
+        private System.Windows.Forms.PictureBox result_pictureBox2;
         private System.Windows.Forms.Timer game_timer;
         private System.Windows.Forms.Timer p1_timer;
         private System.Windows.Forms.Timer p2_timer;
@@ -282,6 +387,16 @@ namespace FinalProject
         private System.Windows.Forms.PictureBox combo_pictureBox2;
         private System.Windows.Forms.Timer p1_combo_timer;
         private System.Windows.Forms.Timer p1_linepop_timer;
+        private System.Windows.Forms.PictureBox KO_pictureBox1;
+        private System.Windows.Forms.PictureBox KO_pictureBox2;
+        private System.Windows.Forms.ImageList KO_img;
+        private System.Windows.Forms.Timer p1_KOtimer;
+        private System.Windows.Forms.Timer p2_KOtimer;
+        private System.Windows.Forms.ImageList result_img;
+        private System.Windows.Forms.PictureBox countdown_pictureBox1;
+        private System.Windows.Forms.PictureBox countdown_pictureBox2;
+        private System.Windows.Forms.Timer timesup_timer;
+        private System.Windows.Forms.Button ok_btn;
     }
 }
 
