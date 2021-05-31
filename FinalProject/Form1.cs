@@ -304,7 +304,7 @@ namespace FinalProject
         private void game_timer_Tick(object sender, EventArgs e)
         {
             r++;  // test
-            if (r == 5) { p1.bar.Value += 2; r=0; }  // test
+            if (r == 8) { p1.bar.Value += 2; r=0; }  // test
 
             time_left.Text = (Convert.ToString(min)).PadLeft(2, '0') + " : " + (Convert.ToString(sec)).PadLeft(2, '0');
             if (min == 0 && sec == 0)
@@ -626,7 +626,7 @@ namespace FinalProject
         public void init()
         {
             /* 遊戲變數初始 */
-            mine = bar.Value = score = line_pop = KO = 0;
+            mine = bar.Value = score = line_pop = KO = holding = 0;
             combo = -1;
             has_hold = false;
             score_text.Text = "0";
@@ -1731,16 +1731,31 @@ namespace FinalProject
             else if (full_line == 2)
             {
                 combo++;
+                if (combo == 0)
+                {
+                    linepop_player.URL = "src/pop1.wav";
+                    linepop_player.controls.play();
+                }
                 return 1;
             }
             else if (full_line == 3)
             {
                 combo++;
+                if (combo == 0)
+                {
+                    linepop_player.URL = "src/pop1.wav";
+                    linepop_player.controls.play();
+                }
                 return 2;
             }
             else if (full_line == 4)
             {
                 combo++;
+                if (combo == 0)
+                {
+                    linepop_player.URL = "src/pop1.wav";
+                    linepop_player.controls.play();
+                }
                 return 4;
             }
             else return 0;
