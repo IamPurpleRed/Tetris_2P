@@ -397,6 +397,7 @@ namespace FinalProject
             ko_player.URL = "src/ko.wav";
             ko_player.controls.play();
             enable1 = false;
+            p1_timer.Interval = p1.drop_timer;
             p2.KO++;
             KO_pictureBox2.Image = KO_img.Images[p2.KO - 1];
             KO_pictureBox2.Visible = true;
@@ -437,7 +438,7 @@ namespace FinalProject
             if (enable1)
             {
                 /* 1P按鍵 */
-                if (e.KeyCode == Keys.A)
+                if (e.KeyCode == Keys.Left)
                 {
                     if (p1.directionX(p1.block_row, p1.block_col, p1.block_type, -1))
                     {
@@ -450,7 +451,7 @@ namespace FinalProject
                         p1.showGrids();
                     }
                 }
-                if (e.KeyCode == Keys.D)
+                if (e.KeyCode == Keys.Right)
                 {
                     if (p1.directionX(p1.block_row, p1.block_col, p1.block_type, 1))
                     {
@@ -463,7 +464,7 @@ namespace FinalProject
                         p1.showGrids();
                     }
                 }
-                if (e.KeyCode == Keys.W)
+                if (e.KeyCode == Keys.Up)
                 {
                     int tmp_row = p1.block_row, tmp_col = p1.block_col, tmp_type = p1.block_type;  // 先記錄原本block_row & block_col & block_type位置
                     p1.block_type = p1.rotateBlock(p1.block_row, p1.block_col, p1.block_type);
@@ -474,7 +475,7 @@ namespace FinalProject
                     p1.predictBlock(p1.block_row, p1.block_col, p1.block_type);
                     p1.showGrids();
                 }
-                if (e.KeyCode == Keys.S)
+                if (e.KeyCode == Keys.Down)
                 {
                     p1_timer.Interval = 100;
                 }
@@ -539,14 +540,11 @@ namespace FinalProject
         {
             if (enable1)
             {
-                if (e.KeyCode == Keys.S)
-                {
-                    p1_timer.Interval = p1.drop_timer;
-                }
+                if (e.KeyCode == Keys.Down) p1_timer.Interval = p1.drop_timer;  // TODO: 之後改回S
             }
             if (enable2)
             {
-                // TODO: p2快速下滑 if (e.KeyCode == Keys.Down)
+                // if (e.KeyCode == Keys.Down) p2_timer.Interval = p2.drop_timer;
             }
         }
     }
@@ -1855,11 +1853,12 @@ namespace FinalProject
                 }
             }
 
-            // 新增地雷後的high_r需>3，如果<=3確定KO，但不能讓太多地雷進來
+            // 新增地雷後的high_r需>1，如果<=1確定KO，但不能讓太多地雷進來
             bool status = true;
-            if (high_r - p <= 3)
+            if (high_r - p <= 1)
             {
-                p = high_r - 3;  // 因此要縮減地雷數
+                p = high_r - 1;  // 因此要縮減地雷數
+                if (p < 0) p = 0;  // 避免讓p為負值
                 status = false;
             }
             mine += p;
