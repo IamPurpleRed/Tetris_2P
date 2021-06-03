@@ -21,6 +21,7 @@ namespace FinalProject
 
         bool enable1 = false;  // 決定1P能不能按按鍵
         bool enable2 = false;  // 決定2P能不能按按鍵
+        bool key_w, key_s, key_a, key_d, key_space, key_caps, key_b, key_tab;  // 1P按鍵
 
         public Form1()
         {
@@ -137,6 +138,13 @@ namespace FinalProject
             result_pictureBox1.Visible = false;
             result_pictureBox2.Visible = false;
 
+            /* 使玩家按鍵失效 */
+            enable1 = false;
+            enable2 = false;
+
+            /* 按鍵按下偵測 */
+            key_w = key_s = key_a = key_d = key_space = key_caps = key_b = key_tab = false;  // 1P按鍵
+
             /* Player類別成員變數初始 */
             p1.init();
             p2.init();
@@ -194,8 +202,6 @@ namespace FinalProject
         {
             if (coundown_tick == 0)
             {
-                enable1 = true;
-                enable2 = true;
                 system_player.SoundLocation = "src/countdown.wav";
                 system_player.Play();
                 countdown_pictureBox1.Visible = true;
@@ -208,6 +214,8 @@ namespace FinalProject
             }
             else
             {
+                enable1 = true;
+                enable2 = true;
                 countdown_timer.Stop();
                 coundown_tick = 0;
                 countdown_pictureBox1.Visible = false;
@@ -397,6 +405,7 @@ namespace FinalProject
             ko_player.URL = "src/ko.wav";
             ko_player.controls.play();
             enable1 = false;
+            key_w = key_s = key_a = key_d = key_space = key_caps = key_b = key_tab = false;
             p1_timer.Interval = p1.drop_timer;
             p2.KO++;
             KO_pictureBox2.Image = KO_img.Images[p2.KO - 1];
@@ -437,8 +446,32 @@ namespace FinalProject
         {
             if (enable1)
             {
-                /* 1P按鍵 */
-                if (e.KeyCode == Keys.Left)
+                if (e.KeyCode == Keys.Up) key_w = true;
+                if (e.KeyCode == Keys.Down) key_s = true;
+                if (e.KeyCode == Keys.Left) key_a = true;
+                if (e.KeyCode == Keys.Right) key_d = true;
+                if (e.KeyCode == Keys.Space) key_space = true;
+                if (e.KeyCode == Keys.CapsLock) key_caps = true;
+                if (e.KeyCode == Keys.B) key_b = true;
+                if (e.KeyCode == Keys.Tab) key_tab = true;
+
+                    /* 1P按鍵 */
+                if (key_w)
+                {
+                    int tmp_row = p1.block_row, tmp_col = p1.block_col, tmp_type = p1.block_type;  // 先記錄原本block_row & block_col & block_type位置
+                    p1.block_type = p1.rotateBlock(p1.block_row, p1.block_col, p1.block_type);
+                    p1.eraseBlock(tmp_row, tmp_col, tmp_type);
+                    p1.updateBlock(p1.block_row, p1.block_col, p1.block_type);
+                    p1.predict_block_row = p1.block_row;
+                    p1.predict_block_col = p1.block_col;
+                    p1.predictBlock(p1.block_row, p1.block_col, p1.block_type);
+                    p1.showGrids();
+                }
+                if (key_s)
+                {
+                    p1_timer.Interval = 150;
+                }
+                if (key_a)
                 {
                     if (p1.directionX(p1.block_row, p1.block_col, p1.block_type, -1))
                     {
@@ -451,7 +484,7 @@ namespace FinalProject
                         p1.showGrids();
                     }
                 }
-                if (e.KeyCode == Keys.Right)
+                if (key_d)
                 {
                     if (p1.directionX(p1.block_row, p1.block_col, p1.block_type, 1))
                     {
@@ -464,22 +497,7 @@ namespace FinalProject
                         p1.showGrids();
                     }
                 }
-                if (e.KeyCode == Keys.Up)
-                {
-                    int tmp_row = p1.block_row, tmp_col = p1.block_col, tmp_type = p1.block_type;  // 先記錄原本block_row & block_col & block_type位置
-                    p1.block_type = p1.rotateBlock(p1.block_row, p1.block_col, p1.block_type);
-                    p1.eraseBlock(tmp_row, tmp_col, tmp_type);
-                    p1.updateBlock(p1.block_row, p1.block_col, p1.block_type);
-                    p1.predict_block_row = p1.block_row;
-                    p1.predict_block_col = p1.block_col;
-                    p1.predictBlock(p1.block_row, p1.block_col, p1.block_type);
-                    p1.showGrids();
-                }
-                if (e.KeyCode == Keys.Down)
-                {
-                    p1_timer.Interval = 100;
-                }
-                if (e.KeyCode == Keys.Space || e.KeyCode == Keys.CapsLock)
+                if (key_space || key_caps)
                 {
                     p1_timer.Stop();
                     while (p1.directionY(p1.block_row, p1.block_col, p1.block_type))
@@ -492,7 +510,7 @@ namespace FinalProject
                     p1BlockSet();
                     p1_timer.Start();
                 }
-                if ((e.KeyCode == Keys.B || e.KeyCode == Keys.Tab) && !p1.has_hold)
+                if ((key_b || key_tab) && !p1.has_hold)
                 {
                     p1.has_hold = true;
 
@@ -540,7 +558,16 @@ namespace FinalProject
         {
             if (enable1)
             {
-                if (e.KeyCode == Keys.Down) p1_timer.Interval = p1.drop_timer;  // TODO: 之後改回S
+                if (e.KeyCode == Keys.Up) key_w = false;
+                if (e.KeyCode == Keys.Down) key_s = false;
+                if (e.KeyCode == Keys.Left) key_a = false;
+                if (e.KeyCode == Keys.Right) key_d = false;
+                if (e.KeyCode == Keys.Space) key_space = false;
+                if (e.KeyCode == Keys.CapsLock) key_caps = false;
+                if (e.KeyCode == Keys.B) key_b = false;
+                if (e.KeyCode == Keys.Tab) key_tab = false;
+
+                if (!key_s) p1_timer.Interval = p1.drop_timer;
             }
             if (enable2)
             {
