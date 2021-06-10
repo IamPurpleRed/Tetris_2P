@@ -2,28 +2,33 @@ Tetris 2P
 ===
 ###### tags:`GitHub`, `schoolwork`, `c#`
 
-// TODO: 圖片待補
+![](https://i.imgur.com/L7AiLdx.png)
 
 ## Introduction
 **Made by PurpleRed in 2021**
 
-This repository is my personal final project of **"109-2 視窗程式設計"**. The game is based on the popurlar game in Facebook: **Tetris Battle**
+This repository is my personal final project of **"109-2 視窗程式設計"**. The game is based on the popurlar game in Facebook: **Tetris Battle**.
 
 
 ## How to Play
-// TODO: 待補
-
+Just like Tetris, but the opponent will give you some "mines" when he/she get score. You have to eliminate all of them ASAP, or you will die if your blocks and mines heap too high. So get more scores and KOs if you can!
 
 ## Control
 ### Player 1: 
 * **A/D**: move left/right
 * **S**: let the block fall faster
+* **W**: rotate the block
 * **B** or **Tab**: hold the block
 * **Space** or **Caps Lock**: Straight falling
 * Note: **B & Space** for those who prefer using left hand to control the block. **Tab & Caps Lock** for the others.
 
 ### Player 2: 
-* Not yet :P
+* **Left/Right**: move left/right
+* **Down**: let the block fall faster
+* **Up**: rotate the block
+* **<** or **Numpad 2**: hold the block
+* **>** or **Numpad 0**: Straight falling
+* Note: **Numpad 2 & Numpad 0** for those who prefer using left hand to control the block. **< & >** for the others.
 
 
 ## Tools & Environments
@@ -68,8 +73,13 @@ This repository is my personal final project of **"109-2 視窗程式設計"**. 
     * 地雷機制想要還原原作，不過實施難度偏高，考慮開一個新分支試著寫寫看，但是暫不納入正規進度
 * **version 0.2.2-beta (2021/06/01):**
     * 為了測試方便，在2P實作之前，**1P的WSAD鍵位暫時分別以上下左右鍵代替**
-    * 修正1P在按下 **方塊快速下降鍵(S，目前為下鍵)** 的同時被KO之後，1P方塊下降速率沒有回到正常速度的問題
+    * 修正1P在按下**方塊快速下降鍵**的同時被KO之後，1P方塊下降速率沒有回到正常速度的問題
     * 修正receiveMine函式中，新增的地雷數計算結果可能會產生負整數的情況，此漏洞導致在重新繪製grids時會跳出例外狀況(index out of range)
 * **version 0.2.3-beta (2021/06/03):**
-    * 有一位優質的測試玩家在遊戲還在倒數的時候，手指很健康的一直按**方塊直接下降鍵(空白鍵)**，意外發現了在倒數畫面時，方塊就可以讓玩家直接下降的漏洞，此漏洞會使偵測KO的邏輯錯誤，導致誤判玩家KO的情況發生
+    * 有一位優質的測試玩家在遊戲還在倒數的時候，手指很健康的一直按**方塊直接下降鍵**，意外發現了在倒數畫面時，方塊就可以讓玩家直接下降的漏洞，此漏洞會使偵測KO的邏輯錯誤，導致誤判玩家KO的情況發生
     * 重新撰寫偵測鍵盤按鍵的程式邏輯，此改進將會使玩家的操作更加順暢
+* **version 0.3-beta (2021/06/11):**
+    * 2P實作完成！現在已經可以雙人遊玩了
+    * 所有鍵位恢復正常，請依此檔案中的規範為準
+    * 修正玩家一直按下**方塊直接下降鍵**時，堆到最上面不會被KO的情況
+    * 更新README檔案內容

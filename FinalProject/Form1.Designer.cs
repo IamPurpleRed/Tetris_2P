@@ -60,6 +60,8 @@ namespace FinalProject
             this.countdown_pictureBox2 = new System.Windows.Forms.PictureBox();
             this.timesup_timer = new System.Windows.Forms.Timer(this.components);
             this.ok_btn = new System.Windows.Forms.Button();
+            this.p2_linepop_timer = new System.Windows.Forms.Timer(this.components);
+            this.p2_combo_timer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.result_pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.result_pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.linepop_picturebox2)).BeginInit();
@@ -158,6 +160,10 @@ namespace FinalProject
             // p1_timer
             // 
             this.p1_timer.Tick += new System.EventHandler(this.p1_timer_Tick);
+            // 
+            // p2_timer
+            // 
+            this.p2_timer.Tick += new System.EventHandler(this.p2_timer_Tick);
             // 
             // linepop_img
             // 
@@ -279,6 +285,7 @@ namespace FinalProject
             // p2_KOtimer
             // 
             this.p2_KOtimer.Interval = 1000;
+            this.p2_KOtimer.Tick += new System.EventHandler(this.p2_KOtimer_Tick);
             // 
             // result_img
             // 
@@ -322,6 +329,16 @@ namespace FinalProject
             this.ok_btn.Text = "OK";
             this.ok_btn.UseVisualStyleBackColor = true;
             this.ok_btn.Click += new System.EventHandler(this.ok_btn_Click);
+            // 
+            // p2_linepop_timer
+            // 
+            this.p2_linepop_timer.Interval = 1500;
+            this.p2_linepop_timer.Tick += new System.EventHandler(this.p2_linepop_timer_Tick);
+            // 
+            // p2_combo_timer
+            // 
+            this.p2_combo_timer.Interval = 1500;
+            this.p2_combo_timer.Tick += new System.EventHandler(this.p2_combo_timer_Tick);
             // 
             // Form1
             // 
@@ -397,6 +414,8 @@ namespace FinalProject
         private System.Windows.Forms.PictureBox countdown_pictureBox2;
         private System.Windows.Forms.Timer timesup_timer;
         private System.Windows.Forms.Button ok_btn;
+        private System.Windows.Forms.Timer p2_linepop_timer;
+        private System.Windows.Forms.Timer p2_combo_timer;
     }
 }
 

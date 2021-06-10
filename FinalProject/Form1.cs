@@ -19,9 +19,11 @@ namespace FinalProject
         Label time_left = new Label();
         int min = 2, sec = 0;  // 剩餘時間(數字型態)
 
+        /* 按鍵相關 */
         bool enable1 = false;  // 決定1P能不能按按鍵
         bool enable2 = false;  // 決定2P能不能按按鍵
         bool key_w, key_s, key_a, key_d, key_space, key_caps, key_b, key_tab;  // 1P按鍵
+        bool key_up, key_down, key_left, key_right, key_0, key_period, key_2, key_comma;  // 2P按鍵
 
         public Form1()
         {
@@ -98,18 +100,17 @@ namespace FinalProject
             time_left.Visible = true;
             Controls.Add(time_left);
 
-            /* 四個按鈕 */
+            /* 按鈕 */
             start_btn.BackColor = Color.Lime;
             start_btn.ForeColor = Color.White;
             exit_btn.BackColor = Color.Red;
             exit_btn.ForeColor = Color.White;
-
-            ok_btn.Visible = false;
+            ok_btn.Visible = false;  // 遊戲結束的時候才會出現的按鍵
 
             initPage();
         }
 
-        /* 每次回到主畫面(按鈕出現)時都要做的事情 */
+        /* 每次回到主畫面(四個按鈕出現)時都要做的事情 */
         void initPage()
         {
             /* 四個按鈕 */
@@ -144,13 +145,14 @@ namespace FinalProject
 
             /* 按鍵按下偵測 */
             key_w = key_s = key_a = key_d = key_space = key_caps = key_b = key_tab = false;  // 1P按鍵
+            key_up = key_down = key_left = key_right = key_0 = key_period = key_2 = key_comma = false;  // 2P按鍵
 
             /* Player類別成員變數初始 */
             p1.init();
             p2.init();
         }
 
-        /* 四個按鈕的function */
+        /* 五個按鈕的function */
         private void start_btn_Click(object sender, EventArgs e)
         {
             system_player.SoundLocation = "src/button.wav";
@@ -191,38 +193,39 @@ namespace FinalProject
         }
 
         /* 有關倒數相關的變數和function */
+        int countdown_tick = 0;
+
         void countdownFunc()
         {
-            coundown_tick = 0;
+            countdown_tick = 0;
             countdown_timer.Start();
         }
 
-        int coundown_tick = 0;
         private void countdown_timer_Tick(object sender, EventArgs e)
         {
-            if (coundown_tick == 0)
+            if (countdown_tick == 0)
             {
                 system_player.SoundLocation = "src/countdown.wav";
                 system_player.Play();
                 countdown_pictureBox1.Visible = true;
                 countdown_pictureBox2.Visible = true;
             }
-            if (coundown_tick <= 3)
+            if (countdown_tick <= 3)
             {
-                countdown_pictureBox1.Image = countdown_img.Images[coundown_tick];
-                countdown_pictureBox2.Image = countdown_img.Images[coundown_tick];
+                countdown_pictureBox1.Image = countdown_img.Images[countdown_tick];
+                countdown_pictureBox2.Image = countdown_img.Images[countdown_tick];
             }
             else
             {
                 enable1 = true;
                 enable2 = true;
                 countdown_timer.Stop();
-                coundown_tick = 0;
+                countdown_tick = 0;
                 countdown_pictureBox1.Visible = false;
                 countdown_pictureBox2.Visible = false;
                 gamePlaying();
             }
-            coundown_tick++;
+            countdown_tick++;
         }
 
 
@@ -231,9 +234,9 @@ namespace FinalProject
         {
             /* 生成第一個掉落的方塊類型和位置 */
             p1.block_type = (p1.rd.Next(0, 7) + 1) * 10 + 1;
-            p2.block_type = (p2.rd.Next(0, 7) + 1) * 10 + 1;
             p1.block_row = Player.init_block_row;
             p1.block_col = Player.init_block_col;
+            p2.block_type = (p2.rd.Next(0, 7) + 1) * 10 + 1;
             p2.block_row = Player.init_block_row;
             p2.block_col = Player.init_block_col;
 
@@ -242,12 +245,15 @@ namespace FinalProject
             p1.predict_block_col = p1.block_col;
             p1.predictBlock(p1.block_row, p1.block_col, p1.block_type);
             p1.showGrids();
-            // TODO: p2
+            p2.predict_block_row = p2.block_row;
+            p2.predict_block_col = p2.block_col;
+            p2.predictBlock(p2.block_row, p2.block_col, p2.block_type);
+            p2.showGrids();
 
             /* 生成下一個掉落的方塊類型 */
             p1.next_block_type = (p1.rd.Next(0, 7) + 1) * 10 + 1;
-            p2.next_block_type = (p1.rd.Next(0, 7) + 1) * 10 + 1;
             p1.updateNext(p1.next_block_type);
+            p2.next_block_type = (p2.rd.Next(0, 7) + 1) * 10 + 1;
             p2.updateNext(p2.next_block_type);
 
             /* 開啟兩個玩家的timer */
@@ -259,20 +265,20 @@ namespace FinalProject
             game_timer.Enabled = true;
         }
 
-        // type = 0: 時間到，type = 1: 1P得到KO 5直接勝利，type = 2: 2P得到KO 5直接勝利
         private void gameOver(int type)
         {
+            // type = 0: 時間到；type = 1: 1P得到KO 5直接勝利；type = 2: 2P得到KO 5直接勝利
             system_player.Stop();
+            game_timer.Stop();
             p1_timer.Stop();
             p2_timer.Stop();
-            game_timer.Stop();
             enable1 = false;
             enable2 = false;
             result_pictureBox1.Visible = true;
             result_pictureBox2.Visible = true;
             if (type == 0)
             {
-                timesup_timer.Start();
+                timesup_timer.Start();  // 讓 time's up 顯示一陣子，等tick之後再顯示結果
                 result_pictureBox1.Image = result_img.Images[0];
                 result_pictureBox2.Image = result_img.Images[0];
             }
@@ -308,12 +314,8 @@ namespace FinalProject
             ok_btn.Visible = true;
         }
 
-        int r = 0;  // test
         private void game_timer_Tick(object sender, EventArgs e)
         {
-            r++;  // test
-            if (r == 8) { p1.bar.Value += 2; r=0; }  // test
-
             time_left.Text = (Convert.ToString(min)).PadLeft(2, '0') + " : " + (Convert.ToString(sec)).PadLeft(2, '0');
             if (min == 0 && sec == 0)
             {
@@ -342,9 +344,23 @@ namespace FinalProject
                 p1.updateBlock(p1.block_row, p1.block_col, p1.block_type);
                 p1.showGrids();
             }
-            else if (p1.block_row == Player.init_block_row)
-                p1KO();  // 高度在最上面結果directionY回傳false(不給過)
+            else if (p1.block_row == Player.init_block_row)  // 高度在最上面結果directionY回傳false(不給過)
+                p1KO();
             else p1BlockSet();
+        }
+
+        private void p2_timer_Tick(object sender, EventArgs e)
+        {
+            if (p2.directionY(p2.block_row, p2.block_col, p2.block_type))
+            {
+                p2.eraseBlock(p2.block_row, p2.block_col, p2.block_type);
+                p2.block_row++;
+                p2.updateBlock(p2.block_row, p2.block_col, p2.block_type);
+                p2.showGrids();
+            }
+            else if (p2.block_row == Player.init_block_row)  // 高度在最上面結果directionY回傳false(不給過)
+                p2KO();
+            else p2BlockSet();
         }
 
         // p1目前方塊已經就定位後的function
@@ -396,14 +412,63 @@ namespace FinalProject
             p1.showGrids();
         }
 
+        // p2目前方塊已經就定位後的function
+        void p2BlockSet()
+        {
+            int pop_result = p2.fullLineCheck() + p2.updateCombo();  // 本次消掉行數 & combo加成
+            p2.score += pop_result;  // 加分
+            p2.score_text.Text = Convert.ToString(p2.score);  // 更新記分板數字
+            pop_result = p2.confirmPressure(pop_result);  // 自己剛剛的得分是否可以抵銷自己的壓力值
+            p1.receivePressure(pop_result);  // 傳送壓力給對手
+            if (!p2.receiveMine(p2.bar.Value))
+                p2KO();// 地雷產生
+            p2.showGrids();
+
+            /* 圖片顯示 */
+            if (p2.line_pop > 0)
+            {
+                p2_linepop_timer.Stop();
+                p2_linepop_timer.Start();
+                linepop_picturebox2.Visible = true;
+                linepop_picturebox2.Image = linepop_img.Images[p2.line_pop - 1];
+            }
+
+            if (p2.combo > 20)
+            {
+                p2_combo_timer.Stop();
+                p2_combo_timer.Start();
+                combo_pictureBox2.Visible = true;
+                combo_pictureBox2.Image = combo_img.Images[0];
+            }
+            else if (p2.combo >= 1)
+            {
+                p2_combo_timer.Stop();
+                p2_combo_timer.Start();
+                combo_pictureBox2.Visible = true;
+                combo_pictureBox2.Image = combo_img.Images[p2.combo];
+            }
+
+            /* 下一個方塊就緒 */
+            p2.has_hold = false;
+            p2.block_type = p2.next_block_type;
+            p2.next_block_type = (p2.rd.Next(0, 7) + 1) * 10 + 1;
+            p2.updateNext(p2.next_block_type);
+            p2.block_row = Player.init_block_row;
+            p2.block_col = Player.init_block_col;
+            p2.predict_block_row = p2.block_row;
+            p2.predict_block_col = p2.block_col;
+            p2.predictBlock(p2.block_row, p2.block_col, p2.block_type);
+            p2.showGrids();
+        }
+
         // p1被KO時要執行的函式
-        WMPLib.WindowsMediaPlayer ko_player = new WMPLib.WindowsMediaPlayer();
+        WMPLib.WindowsMediaPlayer ko_player1 = new WMPLib.WindowsMediaPlayer();
         void p1KO()
         {
             p1_timer.Stop();
             p1_KOtimer.Start();
-            ko_player.URL = "src/ko.wav";
-            ko_player.controls.play();
+            ko_player1.URL = "src/ko.wav";
+            ko_player1.controls.play();
             enable1 = false;
             key_w = key_s = key_a = key_d = key_space = key_caps = key_b = key_tab = false;
             p1_timer.Interval = p1.drop_timer;
@@ -414,16 +479,50 @@ namespace FinalProject
             countdown_pictureBox1.Visible = true;
         }
 
+        // p2被KO時要執行的函式
+        WMPLib.WindowsMediaPlayer ko_player2 = new WMPLib.WindowsMediaPlayer();
+        void p2KO()
+        {
+            p2_timer.Stop();
+            p2_KOtimer.Start();
+            ko_player2.URL = "src/ko.wav";
+            ko_player2.controls.play();
+            enable2 = false;
+            key_up = key_down = key_left = key_right = key_0 = key_period = key_2 = key_comma = false;
+            p2_timer.Interval = p2.drop_timer;
+            p1.KO++;
+            KO_pictureBox1.Image = KO_img.Images[p1.KO - 1];
+            KO_pictureBox1.Visible = true;
+            countdown_pictureBox2.Image = countdown_img.Images[4];
+            countdown_pictureBox2.Visible = true;
+        }
+
+        // 1P single, double, triple, tetris 小圖案的出現
         private void p1_linepop_timer_Tick(object sender, EventArgs e)
         {
             p1_linepop_timer.Stop();
             linepop_picturebox1.Visible = false;
         }
 
+        // 2P single, double, triple, tetris 小圖案的出現
+        private void p2_linepop_timer_Tick(object sender, EventArgs e)
+        {
+            p2_linepop_timer.Stop();
+            linepop_picturebox2.Visible = false;
+        }
+
+        // 1P combo小圖案的出現
         private void p1_combo_timer_Tick(object sender, EventArgs e)
         {
             p1_combo_timer.Stop();
             combo_pictureBox1.Visible = false;
+        }
+
+        // 2P combo小圖案的出現
+        private void p2_combo_timer_Tick(object sender, EventArgs e)
+        {
+            p2_combo_timer.Stop();
+            combo_pictureBox2.Visible = false;
         }
 
         private void p1_KOtimer_Tick(object sender, EventArgs e)
@@ -433,6 +532,7 @@ namespace FinalProject
             countdown_pictureBox1.Visible = false;
             enable1 = true;
             if (!p1.die() || p2.KO == 5) gameOver(2);
+            else if (min == 0 && sec == 0) return;
             else
             {
                 p1_timer.Start();
@@ -442,20 +542,37 @@ namespace FinalProject
             }
         }
 
+        private void p2_KOtimer_Tick(object sender, EventArgs e)
+        {
+            p2_KOtimer.Stop();
+            p2.showGrids();
+            countdown_pictureBox2.Visible = false;
+            enable2 = true;
+            if (!p2.die() || p1.KO == 5) gameOver(1);
+            else if (min == 0 && sec == 0) return;
+            else
+            {
+                p2_timer.Start();
+                p2_timer_Tick(sender, e);
+                p2.predictBlock(p2.block_row, p2.block_col, p2.block_type);
+                p2.showGrids();
+            }
+        }
+
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
+            /* 1P按鍵 */
             if (enable1)
             {
-                if (e.KeyCode == Keys.Up) key_w = true;
-                if (e.KeyCode == Keys.Down) key_s = true;
-                if (e.KeyCode == Keys.Left) key_a = true;
-                if (e.KeyCode == Keys.Right) key_d = true;
+                if (e.KeyCode == Keys.W) key_w = true;
+                if (e.KeyCode == Keys.S) key_s = true;
+                if (e.KeyCode == Keys.A) key_a = true;
+                if (e.KeyCode == Keys.D) key_d = true;
                 if (e.KeyCode == Keys.Space) key_space = true;
                 if (e.KeyCode == Keys.CapsLock) key_caps = true;
                 if (e.KeyCode == Keys.B) key_b = true;
                 if (e.KeyCode == Keys.Tab) key_tab = true;
 
-                    /* 1P按鍵 */
                 if (key_w)
                 {
                     int tmp_row = p1.block_row, tmp_col = p1.block_col, tmp_type = p1.block_type;  // 先記錄原本block_row & block_col & block_type位置
@@ -506,9 +623,14 @@ namespace FinalProject
                         p1.block_row++;
                         p1.updateBlock(p1.block_row, p1.block_col, p1.block_type);
                     }
-                    p1.showGrids();
-                    p1BlockSet();
-                    p1_timer.Start();
+
+                    if (p1.block_row == Player.init_block_row) p1KO();
+                    else
+                    {
+                        p1.showGrids();
+                        p1BlockSet();
+                        p1_timer.Start();
+                    }
                 }
                 if ((key_b || key_tab) && !p1.has_hold)
                 {
@@ -547,10 +669,114 @@ namespace FinalProject
                     }
                 }
             }
+
+            /* 2P按鍵 */
             if (enable2)
             {
-                /* 2P按鍵 */
-                // TODO: 2P
+                if (e.KeyCode == Keys.Up) key_up = true;
+                if (e.KeyCode == Keys.Down) key_down = true;
+                if (e.KeyCode == Keys.Left) key_left = true;
+                if (e.KeyCode == Keys.Right) key_right = true;
+                if (e.KeyCode == Keys.NumPad0) key_0 = true;
+                if (e.KeyCode == Keys.OemPeriod) key_period = true;
+                if (e.KeyCode == Keys.NumPad2) key_2 = true;
+                if (e.KeyCode == Keys.Oemcomma) key_comma = true;
+
+                if (key_up)
+                {
+                    int tmp_row = p2.block_row, tmp_col = p2.block_col, tmp_type = p2.block_type;  // 先記錄原本block_row & block_col & block_type位置
+                    p2.block_type = p2.rotateBlock(p2.block_row, p2.block_col, p2.block_type);
+                    p2.eraseBlock(tmp_row, tmp_col, tmp_type);
+                    p2.updateBlock(p2.block_row, p2.block_col, p2.block_type);
+                    p2.predict_block_row = p2.block_row;
+                    p2.predict_block_col = p2.block_col;
+                    p2.predictBlock(p2.block_row, p2.block_col, p2.block_type);
+                    p2.showGrids();
+                }
+                if (key_down)
+                {
+                    p2_timer.Interval = 150;
+                }
+                if (key_left)
+                {
+                    if (p2.directionX(p2.block_row, p2.block_col, p2.block_type, -1))
+                    {
+                        p2.eraseBlock(p2.block_row, p2.block_col, p2.block_type);
+                        p2.block_col--;
+                        p2.updateBlock(p2.block_row, p2.block_col, p2.block_type);
+                        p2.predict_block_row = p2.block_row;
+                        p2.predict_block_col = p2.block_col;
+                        p2.predictBlock(p2.block_row, p2.block_col, p2.block_type);
+                        p2.showGrids();
+                    }
+                }
+                if (key_right)
+                {
+                    if (p2.directionX(p2.block_row, p2.block_col, p2.block_type, 1))
+                    {
+                        p2.eraseBlock(p2.block_row, p2.block_col, p2.block_type);
+                        p2.block_col++;
+                        p2.updateBlock(p2.block_row, p2.block_col, p2.block_type);
+                        p2.predict_block_row = p2.block_row;
+                        p2.predict_block_col = p2.block_col;
+                        p2.predictBlock(p2.block_row, p2.block_col, p2.block_type);
+                        p2.showGrids();
+                    }
+                }
+                if (key_0 || key_period)
+                {
+                    p2_timer.Stop();
+                    while (p2.directionY(p2.block_row, p2.block_col, p2.block_type))
+                    {
+                        p2.eraseBlock(p2.block_row, p2.block_col, p2.block_type);
+                        p2.block_row++;
+                        p2.updateBlock(p2.block_row, p2.block_col, p2.block_type);
+                    }
+
+                    if (p2.block_row == Player.init_block_row) p2KO();
+                    else
+                    {
+                        p2.showGrids();
+                        p2BlockSet();
+                        p2_timer.Start();
+                    }
+                }
+                if ((key_2 || key_comma) && !p2.has_hold)
+                {
+                    p2.has_hold = true;
+
+                    // 第一次hold: 直接把現有的放進hold，換成下一個
+                    if (p2.holding == 0)
+                    {
+                        p2.eraseBlock(p2.block_row, p2.block_col, p2.block_type);
+                        p2.holding = p2.block_type;  // 有可能不為 X1 的格式 (例如32, 42...)
+                        p2.block_type = p2.next_block_type;
+                        p2.next_block_type = (p2.rd.Next(0, 7) + 1) * 10 + 1;
+                        p2.updateNext(p2.next_block_type);
+                        p2.holding = p2.updateHold(p2.holding);  // 修正回 X1 的格式
+                        p2.block_row = Player.init_block_row;
+                        p2.block_col = Player.init_block_col;
+                        p2.predict_block_row = p2.block_row;
+                        p2.predict_block_col = p2.block_col;
+                        p2.predictBlock(p2.block_row, p2.block_col, p2.block_type);
+                        p2.showGrids();
+                    }
+
+                    // 之後的hold: 把現有的跟hold住的互換
+                    else
+                    {
+                        p2.eraseBlock(p2.block_row, p2.block_col, p2.block_type);
+                        int swap = p2.holding;
+                        p2.holding = p2.updateHold(p2.block_type);
+                        p2.block_type = swap;
+                        p2.block_row = Player.init_block_row;
+                        p2.block_col = Player.init_block_col;
+                        p2.predict_block_row = p2.block_row;
+                        p2.predict_block_col = p2.block_col;
+                        p2.predictBlock(p2.block_row, p2.block_col, p2.block_type);
+                        p2.showGrids();
+                    }
+                }
             }
         }
 
@@ -558,10 +784,10 @@ namespace FinalProject
         {
             if (enable1)
             {
-                if (e.KeyCode == Keys.Up) key_w = false;
-                if (e.KeyCode == Keys.Down) key_s = false;
-                if (e.KeyCode == Keys.Left) key_a = false;
-                if (e.KeyCode == Keys.Right) key_d = false;
+                if (e.KeyCode == Keys.W) key_w = false;
+                if (e.KeyCode == Keys.S) key_s = false;
+                if (e.KeyCode == Keys.A) key_a = false;
+                if (e.KeyCode == Keys.D) key_d = false;
                 if (e.KeyCode == Keys.Space) key_space = false;
                 if (e.KeyCode == Keys.CapsLock) key_caps = false;
                 if (e.KeyCode == Keys.B) key_b = false;
@@ -571,7 +797,16 @@ namespace FinalProject
             }
             if (enable2)
             {
-                // if (e.KeyCode == Keys.Down) p2_timer.Interval = p2.drop_timer;
+                if (e.KeyCode == Keys.Up) key_up = false;
+                if (e.KeyCode == Keys.Down) key_down = false;
+                if (e.KeyCode == Keys.Left) key_left = false;
+                if (e.KeyCode == Keys.Right) key_right = false;
+                if (e.KeyCode == Keys.NumPad0) key_0 = false;
+                if (e.KeyCode == Keys.OemPeriod) key_period = false;
+                if (e.KeyCode == Keys.NumPad2) key_2 = false;
+                if (e.KeyCode == Keys.Oemcomma) key_comma = false;
+
+                if (e.KeyCode == Keys.Down) p2_timer.Interval = p2.drop_timer;
             }
         }
     }
