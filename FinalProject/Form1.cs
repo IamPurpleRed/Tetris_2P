@@ -251,9 +251,15 @@ namespace FinalProject
             p2.showGrids();
 
             /* 生成下一個掉落的方塊類型 */
-            p1.next_block_type = (p1.rd.Next(0, 7) + 1) * 10 + 1;
+            do
+            {
+                p1.next_block_type = (p1.rd.Next(0, 7) + 1) * 10 + 1;
+            } while (p1.block_type == p1.next_block_type);
             p1.updateNext(p1.next_block_type);
-            p2.next_block_type = (p2.rd.Next(0, 7) + 1) * 10 + 1;
+            do
+            {
+                p2.next_block_type = (p2.rd.Next(0, 7) + 1) * 10 + 1;
+            } while (p2.block_type == p2.next_block_type);
             p2.updateNext(p2.next_block_type);
 
             /* 開啟兩個玩家的timer */
@@ -265,10 +271,10 @@ namespace FinalProject
             game_timer.Enabled = true;
         }
 
+        WMPLib.WindowsMediaPlayer result_player = new WMPLib.WindowsMediaPlayer();
         private void gameOver(int type)
         {
             // type = 0: 時間到；type = 1: 1P得到KO 5直接勝利；type = 2: 2P得到KO 5直接勝利
-            system_player.Stop();
             game_timer.Stop();
             p1_timer.Stop();
             p2_timer.Stop();
@@ -278,18 +284,26 @@ namespace FinalProject
             result_pictureBox2.Visible = true;
             if (type == 0)
             {
+                result_player.URL = "src/times_up.wav";
+                result_player.controls.play();
                 timesup_timer.Start();  // 讓 time's up 顯示一陣子，等tick之後再顯示結果
                 result_pictureBox1.Image = result_img.Images[0];
                 result_pictureBox2.Image = result_img.Images[0];
             }
             else if (type == 1)
             {
+                system_player.Stop();
+                result_player.URL = "src/win.wav";
+                result_player.controls.play();
                 result_pictureBox1.Image = result_img.Images[1];
                 result_pictureBox2.Image = result_img.Images[2];
                 ok_btn.Visible = true;
             }
             else
             {
+                system_player.Stop();
+                result_player.URL = "src/win.wav";
+                result_player.controls.play();
                 result_pictureBox1.Image = result_img.Images[2];
                 result_pictureBox2.Image = result_img.Images[1];
                 ok_btn.Visible = true;
@@ -301,15 +315,24 @@ namespace FinalProject
             timesup_timer.Stop();
             if ((p1.KO > p2.KO) || (p1.KO == p2.KO && p1.score > p2.score))
             {
+                result_player.URL = "src/win.wav";
+                result_player.controls.play();
                 result_pictureBox1.Image = result_img.Images[1];
                 result_pictureBox2.Image = result_img.Images[2];
             }
             else if ((p2.KO > p1.KO) || (p1.KO == p2.KO && p2.score > p1.score))
             {
+                result_player.URL = "src/win.wav";
+                result_player.controls.play();
                 result_pictureBox1.Image = result_img.Images[2];
                 result_pictureBox2.Image = result_img.Images[1];
             }
-            else result_pictureBox1.Image = result_pictureBox2.Image = result_img.Images[3];
+            else
+            {
+                result_player.URL = "src/even.wav";
+                result_player.controls.play();
+                result_pictureBox1.Image = result_pictureBox2.Image = result_img.Images[3];
+            }
 
             ok_btn.Visible = true;
         }
@@ -402,7 +425,10 @@ namespace FinalProject
             /* 下一個方塊就緒 */
             p1.has_hold = false;
             p1.block_type = p1.next_block_type;
-            p1.next_block_type = (p1.rd.Next(0, 7) + 1) * 10 + 1;
+            do
+            {
+                p1.next_block_type = (p1.rd.Next(0, 7) + 1) * 10 + 1;
+            } while (p1.block_type == p1.next_block_type);
             p1.updateNext(p1.next_block_type);
             p1.block_row = Player.init_block_row;
             p1.block_col = Player.init_block_col;
@@ -451,7 +477,10 @@ namespace FinalProject
             /* 下一個方塊就緒 */
             p2.has_hold = false;
             p2.block_type = p2.next_block_type;
-            p2.next_block_type = (p2.rd.Next(0, 7) + 1) * 10 + 1;
+            do
+            {
+                p2.next_block_type = (p2.rd.Next(0, 7) + 1) * 10 + 1;
+            } while (p2.block_type == p2.next_block_type);
             p2.updateNext(p2.next_block_type);
             p2.block_row = Player.init_block_row;
             p2.block_col = Player.init_block_col;
@@ -559,6 +588,8 @@ namespace FinalProject
             }
         }
 
+        WMPLib.WindowsMediaPlayer putblock_player1 = new WMPLib.WindowsMediaPlayer();
+        WMPLib.WindowsMediaPlayer putblock_player2 = new WMPLib.WindowsMediaPlayer();
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             /* 1P按鍵 */
@@ -616,6 +647,8 @@ namespace FinalProject
                 }
                 if (key_space || key_caps)
                 {
+                    putblock_player1.URL = "src/put_block.wav";
+                    putblock_player1.controls.play();
                     p1_timer.Stop();
                     while (p1.directionY(p1.block_row, p1.block_col, p1.block_type))
                     {
@@ -642,7 +675,10 @@ namespace FinalProject
                         p1.eraseBlock(p1.block_row, p1.block_col, p1.block_type);
                         p1.holding = p1.block_type;  // 有可能不為 X1 的格式 (例如32, 42...)
                         p1.block_type = p1.next_block_type;
-                        p1.next_block_type = (p1.rd.Next(0, 7) + 1) * 10 + 1;
+                        do
+                        {
+                            p1.next_block_type = (p1.rd.Next(0, 7) + 1) * 10 + 1;
+                        } while (p1.block_type == p1.next_block_type);
                         p1.updateNext(p1.next_block_type);
                         p1.holding = p1.updateHold(p1.holding);  // 修正回 X1 的格式
                         p1.block_row = Player.init_block_row;
@@ -725,6 +761,8 @@ namespace FinalProject
                 }
                 if (key_0 || key_period)
                 {
+                    putblock_player2.URL = "src/put_block.wav";
+                    putblock_player2.controls.play();
                     p2_timer.Stop();
                     while (p2.directionY(p2.block_row, p2.block_col, p2.block_type))
                     {
@@ -751,7 +789,10 @@ namespace FinalProject
                         p2.eraseBlock(p2.block_row, p2.block_col, p2.block_type);
                         p2.holding = p2.block_type;  // 有可能不為 X1 的格式 (例如32, 42...)
                         p2.block_type = p2.next_block_type;
-                        p2.next_block_type = (p2.rd.Next(0, 7) + 1) * 10 + 1;
+                        do
+                        {
+                            p2.next_block_type = (p2.rd.Next(0, 7) + 1) * 10 + 1;
+                        } while (p2.block_type == p2.next_block_type);
                         p2.updateNext(p2.next_block_type);
                         p2.holding = p2.updateHold(p2.holding);  // 修正回 X1 的格式
                         p2.block_row = Player.init_block_row;

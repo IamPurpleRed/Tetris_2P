@@ -83,3 +83,6 @@ Just like Tetris, but the opponent will give you some "mines" when he/she get sc
     * 所有鍵位恢復正常，請依此檔案中的規範為準
     * 修正玩家一直按下**方塊直接下降鍵**時，堆到最上面不會被KO的情況
     * 更新README檔案內容
+* **version 0.3.1-beta (2021/06/14):**
+    * 改進方塊隨機邏輯，現在不會再出現連續掉落相同方塊的情況了！
+    * 新增更多音效(方塊直接落下時觸底的音效、勝利平手音效)
