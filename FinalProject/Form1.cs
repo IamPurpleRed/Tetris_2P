@@ -22,8 +22,8 @@ namespace FinalProject
         /* 按鍵相關 */
         bool enable1 = false;  // 決定1P能不能按按鍵
         bool enable2 = false;  // 決定2P能不能按按鍵
-        bool key_w, key_s, key_a, key_d, key_space, key_caps, key_b, key_tab;  // 1P按鍵
-        bool key_up, key_down, key_left, key_right, key_0, key_period, key_2, key_comma;  // 2P按鍵
+        bool key_w, key_s, key_a, key_d, key_b, key_tab;  // 1P按鍵
+        bool key_up, key_down, key_left, key_right, key_2, key_comma;  // 2P按鍵
 
         public Form1()
         {
@@ -115,8 +115,8 @@ namespace FinalProject
         {
             /* 四個按鈕 */
             start_btn.Visible = true;
-            rule_btn.Visible = true;
-            option_btn.Visible = true;
+            settings_btn.Visible = true;
+            about_btn.Visible = true;
             exit_btn.Visible = true;
 
             /* 剩餘時間初始 */
@@ -144,8 +144,8 @@ namespace FinalProject
             enable2 = false;
 
             /* 按鍵按下偵測 */
-            key_w = key_s = key_a = key_d = key_space = key_caps = key_b = key_tab = false;  // 1P按鍵
-            key_up = key_down = key_left = key_right = key_0 = key_period = key_2 = key_comma = false;  // 2P按鍵
+            key_w = key_s = key_a = key_d = key_b = key_tab = false;  // 1P按鍵
+            key_up = key_down = key_left = key_right = key_2 = key_comma = false;  // 2P按鍵
 
             /* Player類別成員變數初始 */
             p1.init();
@@ -158,23 +158,39 @@ namespace FinalProject
             system_player.SoundLocation = "src/button.wav";
             system_player.Play();
             start_btn.Visible = false;
-            rule_btn.Visible = false;
-            option_btn.Visible = false;
+            settings_btn.Visible = false;
+            about_btn.Visible = false;
             exit_btn.Visible = false;
             countdownFunc();
             Focus();
         }
 
-        private void rule_btn_Click(object sender, EventArgs e)
+        private void settings_btn_Click(object sender, EventArgs e)
         {
             system_player.SoundLocation = "src/button.wav";
             system_player.Play();
+            SettingsPage sp = new SettingsPage();
+
+            // 匯入目前設定值
+            sp.p1_drop_timer = p1.drop_timer;
+            sp.p2_drop_timer = p2.drop_timer;
+            sp.importValue();
+
+            sp.ShowDialog();
+
+            // 當使用者關閉設定視窗時，要更新的設定
+            p1.drop_timer = sp.p1_drop_timer;
+            p2.drop_timer = sp.p2_drop_timer;
+
+            initPage();
         }
 
-        private void option_btn_Click(object sender, EventArgs e)
+        private void about_btn_Click(object sender, EventArgs e)
         {
             system_player.SoundLocation = "src/button.wav";
             system_player.Play();
+            AboutPage ap = new AboutPage();
+            ap.ShowDialog();
         }
 
         private void exit_btn_Click(object sender, EventArgs e)
@@ -499,7 +515,7 @@ namespace FinalProject
             ko_player1.URL = "src/ko.wav";
             ko_player1.controls.play();
             enable1 = false;
-            key_w = key_s = key_a = key_d = key_space = key_caps = key_b = key_tab = false;
+            key_w = key_s = key_a = key_d = key_b = key_tab = false;
             p1_timer.Interval = p1.drop_timer;
             p2.KO++;
             KO_pictureBox2.Image = KO_img.Images[p2.KO - 1];
@@ -517,7 +533,7 @@ namespace FinalProject
             ko_player2.URL = "src/ko.wav";
             ko_player2.controls.play();
             enable2 = false;
-            key_up = key_down = key_left = key_right = key_0 = key_period = key_2 = key_comma = false;
+            key_up = key_down = key_left = key_right = key_2 = key_comma = false;
             p2_timer.Interval = p2.drop_timer;
             p1.KO++;
             KO_pictureBox1.Image = KO_img.Images[p1.KO - 1];
@@ -596,11 +612,10 @@ namespace FinalProject
             if (enable1)
             {
                 if (e.KeyCode == Keys.W) key_w = true;
+                if (e.KeyCode == Keys.S && !key_s) p1_timer_Tick(sender, e);
                 if (e.KeyCode == Keys.S) key_s = true;
                 if (e.KeyCode == Keys.A) key_a = true;
                 if (e.KeyCode == Keys.D) key_d = true;
-                if (e.KeyCode == Keys.Space) key_space = true;
-                if (e.KeyCode == Keys.CapsLock) key_caps = true;
                 if (e.KeyCode == Keys.B) key_b = true;
                 if (e.KeyCode == Keys.Tab) key_tab = true;
 
@@ -645,7 +660,7 @@ namespace FinalProject
                         p1.showGrids();
                     }
                 }
-                if (key_space || key_caps)
+                if (e.KeyCode == Keys.Space || e.KeyCode == Keys.CapsLock)
                 {
                     putblock_player1.URL = "src/put_block.wav";
                     putblock_player1.controls.play();
@@ -710,11 +725,10 @@ namespace FinalProject
             if (enable2)
             {
                 if (e.KeyCode == Keys.Up) key_up = true;
+                if (e.KeyCode == Keys.Down && !key_down) p2_timer_Tick(sender, e);
                 if (e.KeyCode == Keys.Down) key_down = true;
                 if (e.KeyCode == Keys.Left) key_left = true;
                 if (e.KeyCode == Keys.Right) key_right = true;
-                if (e.KeyCode == Keys.NumPad0) key_0 = true;
-                if (e.KeyCode == Keys.OemPeriod) key_period = true;
                 if (e.KeyCode == Keys.NumPad2) key_2 = true;
                 if (e.KeyCode == Keys.Oemcomma) key_comma = true;
 
@@ -759,7 +773,7 @@ namespace FinalProject
                         p2.showGrids();
                     }
                 }
-                if (key_0 || key_period)
+                if (e.KeyCode == Keys.NumPad0 || e.KeyCode == Keys.OemPeriod)
                 {
                     putblock_player2.URL = "src/put_block.wav";
                     putblock_player2.controls.play();
@@ -829,8 +843,6 @@ namespace FinalProject
                 if (e.KeyCode == Keys.S) key_s = false;
                 if (e.KeyCode == Keys.A) key_a = false;
                 if (e.KeyCode == Keys.D) key_d = false;
-                if (e.KeyCode == Keys.Space) key_space = false;
-                if (e.KeyCode == Keys.CapsLock) key_caps = false;
                 if (e.KeyCode == Keys.B) key_b = false;
                 if (e.KeyCode == Keys.Tab) key_tab = false;
 
@@ -842,8 +854,6 @@ namespace FinalProject
                 if (e.KeyCode == Keys.Down) key_down = false;
                 if (e.KeyCode == Keys.Left) key_left = false;
                 if (e.KeyCode == Keys.Right) key_right = false;
-                if (e.KeyCode == Keys.NumPad0) key_0 = false;
-                if (e.KeyCode == Keys.OemPeriod) key_period = false;
                 if (e.KeyCode == Keys.NumPad2) key_2 = false;
                 if (e.KeyCode == Keys.Oemcomma) key_comma = false;
 

@@ -32,8 +32,8 @@ namespace FinalProject
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.start_btn = new System.Windows.Forms.Button();
-            this.rule_btn = new System.Windows.Forms.Button();
-            this.option_btn = new System.Windows.Forms.Button();
+            this.settings_btn = new System.Windows.Forms.Button();
+            this.about_btn = new System.Windows.Forms.Button();
             this.exit_btn = new System.Windows.Forms.Button();
             this.countdown_timer = new System.Windows.Forms.Timer(this.components);
             this.countdown_img = new System.Windows.Forms.ImageList(this.components);
@@ -85,31 +85,32 @@ namespace FinalProject
             this.start_btn.UseVisualStyleBackColor = true;
             this.start_btn.Click += new System.EventHandler(this.start_btn_Click);
             // 
-            // rule_btn
+            // settings_btn
             // 
-            this.rule_btn.Location = new System.Drawing.Point(550, 360);
-            this.rule_btn.Name = "rule_btn";
-            this.rule_btn.Size = new System.Drawing.Size(100, 35);
-            this.rule_btn.TabIndex = 1;
-            this.rule_btn.Text = "RULES";
-            this.rule_btn.UseVisualStyleBackColor = true;
-            this.rule_btn.Click += new System.EventHandler(this.rule_btn_Click);
+            this.settings_btn.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.settings_btn.Location = new System.Drawing.Point(545, 360);
+            this.settings_btn.Name = "settings_btn";
+            this.settings_btn.Size = new System.Drawing.Size(110, 35);
+            this.settings_btn.TabIndex = 1;
+            this.settings_btn.Text = "SETTINGS";
+            this.settings_btn.UseVisualStyleBackColor = true;
+            this.settings_btn.Click += new System.EventHandler(this.settings_btn_Click);
             // 
-            // option_btn
+            // about_btn
             // 
-            this.option_btn.Location = new System.Drawing.Point(550, 405);
-            this.option_btn.Name = "option_btn";
-            this.option_btn.Size = new System.Drawing.Size(100, 35);
-            this.option_btn.TabIndex = 2;
-            this.option_btn.Text = "OPTION";
-            this.option_btn.UseVisualStyleBackColor = true;
-            this.option_btn.Click += new System.EventHandler(this.option_btn_Click);
+            this.about_btn.Location = new System.Drawing.Point(545, 405);
+            this.about_btn.Name = "about_btn";
+            this.about_btn.Size = new System.Drawing.Size(110, 35);
+            this.about_btn.TabIndex = 2;
+            this.about_btn.Text = "ABOUT";
+            this.about_btn.UseVisualStyleBackColor = true;
+            this.about_btn.Click += new System.EventHandler(this.about_btn_Click);
             // 
             // exit_btn
             // 
-            this.exit_btn.Location = new System.Drawing.Point(550, 450);
+            this.exit_btn.Location = new System.Drawing.Point(545, 450);
             this.exit_btn.Name = "exit_btn";
-            this.exit_btn.Size = new System.Drawing.Size(100, 35);
+            this.exit_btn.Size = new System.Drawing.Size(110, 35);
             this.exit_btn.TabIndex = 3;
             this.exit_btn.Text = "EXIT";
             this.exit_btn.UseVisualStyleBackColor = true;
@@ -344,6 +345,7 @@ namespace FinalProject
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 26F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1199, 661);
             this.Controls.Add(this.ok_btn);
             this.Controls.Add(this.countdown_pictureBox2);
@@ -357,11 +359,12 @@ namespace FinalProject
             this.Controls.Add(this.result_pictureBox2);
             this.Controls.Add(this.result_pictureBox1);
             this.Controls.Add(this.exit_btn);
-            this.Controls.Add(this.option_btn);
-            this.Controls.Add(this.rule_btn);
+            this.Controls.Add(this.about_btn);
+            this.Controls.Add(this.settings_btn);
             this.Controls.Add(this.start_btn);
             this.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.MaximizeBox = false;
             this.Name = "Form1";
@@ -386,8 +389,8 @@ namespace FinalProject
         #endregion
 
         private System.Windows.Forms.Button start_btn;
-        private System.Windows.Forms.Button rule_btn;
-        private System.Windows.Forms.Button option_btn;
+        private System.Windows.Forms.Button settings_btn;
+        private System.Windows.Forms.Button about_btn;
         private System.Windows.Forms.Button exit_btn;
         private System.Windows.Forms.Timer countdown_timer;
         private System.Windows.Forms.ImageList countdown_img;

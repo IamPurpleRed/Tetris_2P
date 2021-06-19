@@ -2,7 +2,7 @@ Tetris 2P
 ===
 ###### tags:`GitHub`, `schoolwork`, `c#`
 
-![](https://i.imgur.com/L7AiLdx.png)
+![](https://i.imgur.com/0rlGku3.png)
 
 ## Introduction
 **Made by PurpleRed in 2021**
@@ -86,3 +86,10 @@ Just like Tetris, but the opponent will give you some "mines" when he/she get sc
 * **version 0.3.1-beta (2021/06/14):**
     * 改進方塊隨機邏輯，現在不會再出現連續掉落相同方塊的情況了！
     * 新增更多音效(方塊直接落下時觸底的音效、勝利平手音效)
+* **version 0.4-beta (2021/06/19):**
+    * 此版將進行最終調校和細部功能實作
+    * 主畫面按鈕更改，將RULES按鈕改為SETTINGS，將OPTION按鈕改為ABOUT
+    * 實作SETTINGS按鈕，玩家可以**調整自己的方塊落下速率**藉由按下此按鈕
+    * 實作ABOUT按鈕，將可以查看此專題的相關資訊(GitHub, 版本號...等)
+    * 再次改善偵測鍵盤的程式邏輯，此改進將避免發生按一次按鈕卻直接下降兩個方塊的情況
+    * 修正一直按下**方塊快速下降鍵**的時候，方塊留在原地不會下降的情況
