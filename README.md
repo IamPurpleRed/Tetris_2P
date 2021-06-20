@@ -13,6 +13,7 @@ This repository is my personal final project of **"109-2 視窗程式設計"**. 
 ## How to Play
 Just like Tetris, but the opponent will give you some "mines" when he/she get score. You have to eliminate all of them ASAP, or you will die if your blocks and mines heap too high. So get more scores and KOs if you can!
 
+
 ## Control
 ### Player 1: 
 * **A/D**: move left/right
@@ -36,7 +37,15 @@ Just like Tetris, but the opponent will give you some "mines" when he/she get sc
 * Language: Microsoft .NET Framework 4.7.2
 * IDE: Microsoft Visual Studio 2019
 
-**Make sure all of the header files & source files be added in the Visual Studio project before compiling on vs2019**
+**Make sure all of the header files & source files be added in the Visual Studio project before compiling on vs2019.**
+
+
+## Special Thanks
+**Thanks for those who test my game when it's unstable. I can't finish it without their help.**
+
+Chien / 巨根君峰 / 卍煞氣a嘎珉卍 / [BoyBen](https://github.com/boyben001)<br>
+子筠 / Mike / Ken / 77 / Ckyna / 靖哥 / 涵<br>
+阿哲 / 渝涵 / 童龍龍 / Tom / Steven
 
 
 ## Release Log
@@ -93,3 +102,7 @@ Just like Tetris, but the opponent will give you some "mines" when he/she get sc
     * 實作ABOUT按鈕，將可以查看此專題的相關資訊(GitHub, 版本號...等)
     * 再次改善偵測鍵盤的程式邏輯，此改進將避免發生按一次按鈕卻直接下降兩個方塊的情況
     * 修正一直按下**方塊快速下降鍵**的時候，方塊留在原地不會下降的情況
+* **version 1.0 (2021/06/20):**
+    * **正式發行版本，沒意外的話也是最後一版，enjoy the game :)**
+    * 在README檔案以及程式內補上致謝名單，感謝所有參與測試的玩家！
+    * 目前已發現的遊戲體驗缺陷：一直按著某個鍵是可以連續移動或旋轉的，但是只要按下其它按鍵，就無法繼續連續移動或旋轉。在版本號0.3.1-beta不會有這個問題，只是此寫法會造成版本號0.4-beta所發現的bug(按一次按鈕卻下降兩個方塊)，比較嚴重性之後，因此選擇犧牲此遊戲體驗

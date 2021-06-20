@@ -629,6 +629,7 @@ namespace FinalProject
                     p1.predict_block_col = p1.block_col;
                     p1.predictBlock(p1.block_row, p1.block_col, p1.block_type);
                     p1.showGrids();
+                    key_w = false;
                 }
                 if (key_s)
                 {
@@ -646,6 +647,7 @@ namespace FinalProject
                         p1.predictBlock(p1.block_row, p1.block_col, p1.block_type);
                         p1.showGrids();
                     }
+                    key_a = false;
                 }
                 if (key_d)
                 {
@@ -659,6 +661,7 @@ namespace FinalProject
                         p1.predictBlock(p1.block_row, p1.block_col, p1.block_type);
                         p1.showGrids();
                     }
+                    key_d = false;
                 }
                 if (e.KeyCode == Keys.Space || e.KeyCode == Keys.CapsLock)
                 {
@@ -718,6 +721,7 @@ namespace FinalProject
                         p1.predictBlock(p1.block_row, p1.block_col, p1.block_type);
                         p1.showGrids();
                     }
+                    key_b = key_tab = false;
                 }
             }
 
@@ -742,6 +746,7 @@ namespace FinalProject
                     p2.predict_block_col = p2.block_col;
                     p2.predictBlock(p2.block_row, p2.block_col, p2.block_type);
                     p2.showGrids();
+                    key_up = false;
                 }
                 if (key_down)
                 {
@@ -759,6 +764,7 @@ namespace FinalProject
                         p2.predictBlock(p2.block_row, p2.block_col, p2.block_type);
                         p2.showGrids();
                     }
+                    key_left = false;
                 }
                 if (key_right)
                 {
@@ -772,6 +778,7 @@ namespace FinalProject
                         p2.predictBlock(p2.block_row, p2.block_col, p2.block_type);
                         p2.showGrids();
                     }
+                    key_right = false;
                 }
                 if (e.KeyCode == Keys.NumPad0 || e.KeyCode == Keys.OemPeriod)
                 {
@@ -831,12 +838,15 @@ namespace FinalProject
                         p2.predictBlock(p2.block_row, p2.block_col, p2.block_type);
                         p2.showGrids();
                     }
+
+                    key_2 = key_comma = false;
                 }
             }
         }
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
+            /* 1P按鍵 */
             if (enable1)
             {
                 if (e.KeyCode == Keys.W) key_w = false;
@@ -848,6 +858,8 @@ namespace FinalProject
 
                 if (!key_s) p1_timer.Interval = p1.drop_timer;
             }
+
+            /* 2P按鍵 */
             if (enable2)
             {
                 if (e.KeyCode == Keys.Up) key_up = false;

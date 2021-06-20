@@ -89,9 +89,9 @@ namespace FinalProject
             this.label3.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(26, 109);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(138, 23);
+            this.label3.Size = new System.Drawing.Size(95, 23);
             this.label3.TabIndex = 6;
-            this.label3.Text = "Version: 0.4-beta";
+            this.label3.Text = "Version: 1.0";
             // 
             // label4
             // 
@@ -149,6 +149,7 @@ namespace FinalProject
             // 
             // special_thanks_list
             // 
+            this.special_thanks_list.Enabled = false;
             this.special_thanks_list.Font = new System.Drawing.Font("華康手札體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.special_thanks_list.Location = new System.Drawing.Point(30, 320);
             this.special_thanks_list.Multiline = true;
@@ -156,6 +157,7 @@ namespace FinalProject
             this.special_thanks_list.ReadOnly = true;
             this.special_thanks_list.Size = new System.Drawing.Size(658, 122);
             this.special_thanks_list.TabIndex = 12;
+            this.special_thanks_list.TabStop = false;
             // 
             // AboutPage
             // 

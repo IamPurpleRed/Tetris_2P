@@ -34,14 +34,14 @@ namespace FinalProject
             this.title_deco = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.drop_timer_block = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.drop_timer1 = new System.Windows.Forms.NumericUpDown();
             this.drop_timer2 = new System.Windows.Forms.NumericUpDown();
+            this.drop_timer1 = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
             this.apply_btn = new System.Windows.Forms.Button();
             this.reset_btn = new System.Windows.Forms.Button();
             this.drop_timer_block.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.drop_timer1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.drop_timer2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.drop_timer1)).BeginInit();
             this.SuspendLayout();
             // 
             // title
@@ -88,21 +88,41 @@ namespace FinalProject
             this.drop_timer_block.TabStop = false;
             this.drop_timer_block.Text = "方塊落下速度(毫秒)";
             // 
-            // label1
+            // drop_timer2
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("華康手札體", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(25, 72);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(71, 23);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Player 2";
+            this.drop_timer2.Font = new System.Drawing.Font("華康手札體", 11F);
+            this.drop_timer2.Increment = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.drop_timer2.InterceptArrowKeys = false;
+            this.drop_timer2.Location = new System.Drawing.Point(223, 70);
+            this.drop_timer2.Maximum = new decimal(new int[] {
+            3000,
+            0,
+            0,
+            0});
+            this.drop_timer2.Minimum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+            this.drop_timer2.Name = "drop_timer2";
+            this.drop_timer2.Size = new System.Drawing.Size(120, 29);
+            this.drop_timer2.TabIndex = 6;
+            this.drop_timer2.TabStop = false;
+            this.drop_timer2.Value = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
             // 
             // drop_timer1
             // 
             this.drop_timer1.Font = new System.Drawing.Font("華康手札體", 11F);
             this.drop_timer1.Increment = new decimal(new int[] {
-            100,
+            50,
             0,
             0,
             0});
@@ -128,35 +148,15 @@ namespace FinalProject
             0,
             0});
             // 
-            // drop_timer2
+            // label1
             // 
-            this.drop_timer2.Font = new System.Drawing.Font("華康手札體", 11F);
-            this.drop_timer2.Increment = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.drop_timer2.InterceptArrowKeys = false;
-            this.drop_timer2.Location = new System.Drawing.Point(223, 70);
-            this.drop_timer2.Maximum = new decimal(new int[] {
-            3000,
-            0,
-            0,
-            0});
-            this.drop_timer2.Minimum = new decimal(new int[] {
-            200,
-            0,
-            0,
-            0});
-            this.drop_timer2.Name = "drop_timer2";
-            this.drop_timer2.Size = new System.Drawing.Size(120, 29);
-            this.drop_timer2.TabIndex = 6;
-            this.drop_timer2.TabStop = false;
-            this.drop_timer2.Value = new decimal(new int[] {
-            200,
-            0,
-            0,
-            0});
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("華康手札體", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(25, 72);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(71, 23);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Player 2";
             // 
             // apply_btn
             // 
@@ -201,8 +201,8 @@ namespace FinalProject
             this.Text = "Settings";
             this.drop_timer_block.ResumeLayout(false);
             this.drop_timer_block.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.drop_timer1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.drop_timer2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.drop_timer1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

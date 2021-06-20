@@ -14,7 +14,9 @@ namespace FinalProject
     {
         string[] special_thanks =
         {
-            
+            "Chien / 巨根君峰 / 卍煞氣a嘎珉卍 / BoyBen", 
+            "子筠 / Mike / Ken / 77 / Ckyna / 靖哥 / 涵", 
+            "阿哲 / 渝涵 / 童龍龍 / Tom / Steven"
         };
 
         public AboutPage()
@@ -23,8 +25,7 @@ namespace FinalProject
 
             for (int i = 0; i < special_thanks.Length; i++)
             {
-                special_thanks_list.Text += special_thanks[i] + "    ";
-                if (i > 0 && i % 5 == 0) special_thanks_list.Text += "\r\n";
+                special_thanks_list.Text += special_thanks[i] + "\r\n";
             }
         }
 
