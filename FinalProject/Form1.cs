@@ -2139,8 +2139,9 @@ namespace FinalProject
         {
             if (bar.Value < p)
             {
-                bar.Value -= bar.Value;
-                return p - bar.Value;
+                int result = p - bar.Value;
+                bar.Value = 0;
+                return result;
             }
             else
             {
